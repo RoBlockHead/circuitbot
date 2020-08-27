@@ -1,0 +1,131 @@
+app.message("cb.outputEmailList", async ({ message, say, context }) => {
+  try {
+    const userList = await app.client.users.list({
+      token: context.botToken
+    });
+
+    var emails = jp.query(userList, "$.members[*]..email");
+    var fields = [];
+    var i;
+    for (i = 0; i < emails.length; i++) {
+      if (emails[i + 1] != null) {
+        fields =
+          fields +
+          `{"type": "section","text": {"type": "plain_text","text": "${emails[i]}"}},`;
+      } else {
+        fields =
+          fields +
+          `{"type": "section","text": {"type": "plain_text","text": "${emails[i]}"}}`;
+      }
+
+      // console.log(jsonBlock.fields);
+    }
+
+    console.log(fields);
+    var textBlock = `{"blocks": [ { "type": "section", "text": { "type": "mrkdwn", "text": "*Here are The emails I retrieved:*" } }, { "type": "divider" }, ${fields}] } `;
+    console.log(textBlock);
+    var jsonBlock = JSON.parse(textBlock);
+    console.log(`${message.user} requested email list`);
+    // console.log(emails);
+
+    say("Email List Retrieved");
+    //say("Here is the user list: \n" + emails.toString().split(',').join("\n"));
+    console.log(JSON.stringify(jsonBlock));
+    say(jsonBlock);
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+app.message(/(bean|bendy)/i, async ({ message, say, context }) => {
+  try {
+    if (message.channel == spamChannel) {
+      say("...");
+    }
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+app.message("CB.BestColor", async ({ message, say, context }) => {
+  try {
+    var user_id = message.user;
+    say(`<@${user_id}>, #0DB04B and #232323 are the best colors.`);
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+app.message("Circuit Runners", async ({ message, say, context }) => {
+  try {
+    say(
+      `<@${message.user}>, our brand specifies that our name is "CircuitRunners," not "Circuit Runners," Please abide by our brand standards.`
+    );
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+app.message(/8d48ab/i, async ({ message, say, context }) => {
+  try {
+    say(
+      `<@${message.user}>, #8d48ab is not the best color. #0DB04B and #232323 are the best colors.`
+    );
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+app.message(":circuitrunners:", async ({ message, say, context }) => {
+  try {
+    if (message.channel == spamChannel) {
+      say(":circuitrunners:");
+    }
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+app.message("CircuitRunners", async ({ message, say, context }) => {
+  try {
+    if (message.channel == spamChannel) {
+      say(":circuitrunners:");
+    }
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+app.message(/^:reset:$/, async ({ message, say, context }) => {
+  try {
+    if (message.channel == spamChannel) {
+      say(":circuitrunners:");
+      const result = await app.client.chat.delete({
+        // The token you used to initialize your app is stored in the `context` object
+        token: context.botToken,
+        channel: message.channel,
+        ts: message.ts
+      });
+    }
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+app.message("<@UPV5JUL0P>", async ({ message, say, context }) => {
+  try {
+    if (message.channel == spamChannel) {
+      say("It's Bean time Ladies and Gentlemen");
+    }
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+app.message("", async ({ message, say, context }) => {
+  try {
+    console.log(message.text);
+  } catch (error) {
+    console.error(error);
+  }
+});
